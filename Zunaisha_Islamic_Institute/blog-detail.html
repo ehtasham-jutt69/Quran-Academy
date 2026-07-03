@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><!-- BLOG_TITLE --> | Zunaisha Islamic Institute</title>
+
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="../css/all.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../service-cards.css">
+
+    <!-- Intl Tel Input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+    <style>
+        :root {
+            --bg-color: #EFF6FF;
+            --card-bg: #FFFFFF;
+            --text-dark: #0F172A;
+            --text-muted: #4B5563;
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 4px 6px -1px rgba(30, 58, 138, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(30, 58, 138, 0.08);
+            --shadow-lg: 0 20px 25px -5px rgba(30, 58, 138, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --title-color: #1E3A8A;
+            --content-text-color: #334155;
+        }
+
+        body.dark-mode {
+            --bg-color: #0A0F1D;
+            --card-bg: #131A2E;
+            --text-dark: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-color: #1E293B;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(19, 26, 46, 0.8);
+            --glass-border: rgba(30, 41, 59, 0.6);
+            --title-color: #60A5FA;
+            --content-text-color: #CBD5E1;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Reading Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            z-index: 1100;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(to right, var(--light), var(--secondery));
+            width: 0%;
+        }
+
+        /* Dark Mode Toggle Floating Button */
+        .theme-toggle-floating {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            z-index: 1000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--main);
+            color: var(--secondery);
+            border: 2px solid var(--secondery);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-toggle-floating:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: var(--shadow-gold);
+            background-color: var(--secondery);
+            color: var(--dark);
+        }
+
+        /* Glassmorphic Navbar Custom Overrides */
+        .sticky-navbar {
+            background-color: var(--glass-bg) !important;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: background-color 0.4s ease;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-expand-lg .navbar-nav .nav-link {
+            color: var(--text-dark) !important;
+            transition: color 0.3s;
+        }
+
+        .navbar-expand-lg .navbar-nav .nav-link:hover,
+        .navbar-expand-lg .navbar-nav .nav-link.active {
+            color: var(--secondery) !important;
+            -webkit-text-stroke: 0.5px var(--secondery);
+        }
+
+        /* Table of Contents sidebar */
+        .toc-wrapper {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: sticky;
+            top: 140px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toc-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--main);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .toc-title {
+            color: var(--secondery);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .toc-item {
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .toc-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13.5px;
+            transition: all 0.2s;
+            display: block;
+        }
+
+        .toc-link:hover, .toc-link.active {
+            color: var(--secondery);
+            padding-left: 4px;
+        }
+
+        .toc-item-h3 {
+            padding-left: 15px;
+        }
+
+        /* Reading content styling */
+        .blog-content {
+            font-size: 18px;
+            line-height: 1.85;
+            color: var(--content-text-color);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .blog-content p {
+            margin-bottom: 24px;
+        }
+
+        .blog-content h2, .blog-content h3 {
+            color: var(--title-color);
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .blog-content h2 {
+            font-size: 26px;
+        }
+
+        .blog-content h3 {
+            font-size: 22px;
+        }
+
+        /* Quran & Arabic text specific styling */
+        .quran-verse-card {
+            background: rgba(245, 158, 11, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-left: 5px solid var(--secondery);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 35px 0;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            line-height: 2;
+            color: var(--main);
+            direction: rtl;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        body.dark-mode .arabic-text {
+            color: #60A5FA;
+        }
+
+        .translation {
+            font-family: 'Inter', sans-serif;
+            font-size: 15.5px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        /* Share bar */
+        .share-circle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            margin: 0 4px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .share-circle-btn:hover {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        .btn-share-whatsapp:hover { background-color: #25D366; border-color: #25D366; }
+        .btn-share-facebook:hover { background-color: #1877F2; border-color: #1877F2; }
+        .btn-share-twitter:hover { background-color: #1DA1F2; border-color: #1DA1F2; }
+        .btn-share-copy:hover { background-color: var(--main); border-color: var(--main); }
+
+        /* Comments Box */
+        .comment-card {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment-card:last-child {
+            border-bottom: none;
+        }
+
+        /* Dynamic Related Articles Cards */
+        .related-card {
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
+            transition: all 0.3s;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondery) !important;
+            box-shadow: var(--shadow-md) !important;
+        }
+
+        .text-truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .bookmark-btn-active {
+            color: var(--secondery) !important;
+            border-color: var(--secondery) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Reading Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="readingProgressBar"></div>
+    </div>
+
+    <!-- ========= Notice Start ========= -->
+    <div class="alert alert-dismissible fade show notice-banner d-flex align-items-center" role="alert" aria-live="polite">
+        <div class="container d-flex align-items-center justify-content-between gap-3 text-center w-100">
+            <i class="fas fa-graduation-cap d-none d-sm-inline" aria-hidden="true"></i>
+            <strong style="font-size: small;">Contact us now for a Free Trial Class</strong>
+            <a href="https://wa.me/+923089646732" class="notice-contact-btn d-none d-md-inline-flex" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp" style="font-size: 16px;"></i>
+                Contact Us
+            </a>
+        </div>
+        <button type="button" class="custom-close" onclick="this.closest('.alert').remove()" aria-label="Close Notice">×</button>
+    </div>
+    <!-- ========= Notice End ========= -->
+
+    <!-- ========= Navbar Start ========= -->
+    <header class="container-fluid sticky-navbar" role="banner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg" role="navigation" aria-label="Main navigation">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/" aria-label="Zunaisha Islamic Institute Homepage">
+                        <img class="logoImg" src="../images/logos/logo.png" alt="Zunaisha Islamic Institute Logo" loading="eager">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation menu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#activities">Activities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#pricing">Fee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/blog.html">Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin-dashboard.html?action=write">Create Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contact.html">Register</a>
+                            </li>
+                        </ul>
+                        <a class="button callButton" href="https://wa.me/+923089646732" target="_blank" aria-label="Contact on WhatsApp" rel="noopener">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                            <span class="visually-hidden">Contact on WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- ========= Navbar End ========= -->
+
+    <!-- ========= Dark/Light Floating Toggle ========= -->
+    <button class="theme-toggle-floating" id="darkModeBtn" aria-label="Toggle Dark/Light Mode" title="Toggle dark/light mode">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <div class="container py-5" style="margin-top: 30px; min-height: 70vh;">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb" style="font-size: 13.5px; font-weight: 500;">
+                <li class="breadcrumb-item"><a href="/" class="text-muted"><i class="fa-solid fa-house me-1"></i>Home</a></li>
+                <li class="breadcrumb-item"><a href="/blog.html" class="text-muted">Blog</a></li>
+                <li class="breadcrumb-item active text-primary" aria-current="page"><!-- BLOG_TITLE --></li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Article Body Area -->
+            <article class="col-lg-8" id="articleBody">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill font-weight-bold mb-3" style="font-size:12px;"><!-- BLOG_CATEGORY --></span>
+                <h1 class="fw-bold mb-3 text-main" style="color: var(--title-color); font-size:36px; line-height:1.3;"><!-- BLOG_TITLE --></h1>
+                
+                <div class="d-flex flex-wrap align-items-center gap-3 text-muted border-bottom pb-4 mb-4" style="font-size:13px; font-weight: 600;">
+                    <span><i class="fa-regular fa-user me-2 text-primary"></i>By <!-- BLOG_AUTHOR --></span>
+                    <span><i class="fa-regular fa-calendar me-2 text-primary"></i><!-- BLOG_DATE --></span>
+                    <span><i class="fa-solid fa-clock me-2 text-primary"></i><!-- BLOG_READING_TIME --></span>
+                    <span><i class="fa-regular fa-eye me-2 text-primary"></i><!-- BLOG_VIEWS --> views</span>
+                    
+                    <button class="btn btn-sm btn-outline-danger ms-auto rounded-pill border-0 px-3 bg-transparent d-flex align-items-center gap-2" id="likeArticleBtn">
+                        <i class="fa-regular fa-heart fs-6"></i><span id="likesCountText"><!-- BLOG_LIKES --></span> likes
+                    </button>
+                    
+                    <button class="btn btn-sm btn-outline-secondary rounded-pill border-0 px-3 bg-transparent d-flex align-items-center gap-2" id="bookmarkArticleBtn">
+                        <i class="fa-regular fa-bookmark fs-6"></i><span>Save</span>
+                    </button>
+                </div>
+
+                <!-- Featured Image placeholder SSR replaced -->
+                <!-- BLOG_FEATURED_IMAGE -->
+
+                <!-- Dynamic Blog Content rendering Rich HTML/Quran/Arabic verses -->
+                <div class="blog-content">
+                    <!-- BLOG_CONTENT -->
+                </div>
+
+                <!-- Floating Social Sharing center -->
+                <div class="d-flex align-items-center py-4 border-top border-bottom my-5">
+                    <span class="fw-bold me-3 text-dark">Share this Knowledge:</span>
+                    <button class="share-circle-btn btn-share-whatsapp" onclick="shareSocial('whatsapp')" title="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></button>
+                    <button class="share-circle-btn btn-share-facebook" onclick="shareSocial('facebook')" title="Share on Facebook"><i class="fa-brands fa-facebook-f"></i></button>
+                    <button class="share-circle-btn btn-share-twitter" onclick="shareSocial('twitter')" title="Share on Twitter"><i class="fa-brands fa-x-twitter"></i></button>
+                    <button class="share-circle-btn btn-share-copy" onclick="copyLink()" title="Copy Link" id="copyShareBtn"><i class="fa-solid fa-link"></i></button>
+                </div>
+
+                <!-- Interactive Comments Section -->
+                <section class="mt-5" id="commentsSection">
+                    <h3 class="fw-bold mb-4" style="color:var(--title-color); font-size: 24px;"><i class="fa-regular fa-comments me-2"></i>Comments (<span id="commentsCountValue"><!-- BLOG_COMMENTS_COUNT --></span>)</h3>
+                    
+                    <!-- Comments Stream SSR rendered -->
+                    <div id="commentsStream" class="mb-5 bg-white p-4 rounded-4 border shadow-sm">
+                        <!-- BLOG_COMMENTS_STREAM -->
+                    </div>
+
+                    <!-- Post Comment Form -->
+                    <div class="bg-white p-4 rounded-4 border shadow-sm mb-5">
+                        <h4 class="fw-bold mb-3 text-dark" style="font-size: 19px;">Leave a Comment</h4>
+                        <p class="text-muted mb-4" style="font-size: 13.5px;">Your email address will not be published. Required fields are marked *</p>
+                        
+                        <form id="commentSubmissionForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted" style="font-size: 13px;">Full Name *</label>
+                                    <input type="text" id="commenterName" class="form-control bg-light border-0 py-2" required style="border-radius: 8px;">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-muted" style="font-size: 13px;">Email Address (Optional)</label>
+                                    <input type="email" id="commenterEmail" class="form-control bg-light border-0 py-2" style="border-radius: 8px;">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-muted" style="font-size: 13px;">Comment *</label>
+                                <textarea id="commenterText" class="form-control bg-light border-0 py-2" rows="4" required style="border-radius: 8px;"></textarea>
+                            </div>
+                            <button type="submit" id="commentSubmitBtn" class="btn btn-primary px-4 py-2 fw-bold rounded-pill">Submit Comment</button>
+                            <span id="commentFeedbackMsg" class="ms-3 fw-bold text-success" style="display:none; font-size:14px;"></span>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Dynamic Related Articles Row -->
+                <section class="mt-5 pt-3">
+                    <h3 class="fw-bold mb-4" style="color:var(--title-color); font-size: 24px;"><i class="fa-regular fa-paper-plane me-2"></i>Related Articles</h3>
+                    <div class="row">
+                        <!-- BLOG_RELATED_ARTICLES -->
+                    </div>
+                </section>
+            </article>
+
+            <!-- TOC & CTA Sidebars -->
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                
+                <!-- Table of Contents widget -->
+                <div class="toc-wrapper">
+                    <h4 class="toc-title"><i class="fa-solid fa-list-ol me-2 text-warning"></i>Table of Contents</h4>
+                    <ul class="toc-list" id="tocList">
+                        <li class="text-muted" style="font-size:12.5px;">No sections found in this article.</li>
+                    </ul>
+                </div>
+
+                <!-- Student CTA Banner -->
+                <div class="sidebar-widget-card text-center bg-white border shadow-sm mt-4 p-4" style="border-radius: 20px; position:sticky; top:450px;">
+                    <i class="fa-solid fa-gift text-warning mb-3" style="font-size:40px;"></i>
+                    <h5 class="fw-bold text-dark mb-2">Learn Quran Properly</h5>
+                    <p class="text-muted mb-4" style="font-size:13.5px; line-height: 1.5;">
+                        Join Zunaisha Islamic Institute. We offer customized 1-to-1 Nazra Quran, Hifz, and detailed Arabic Language learning for kids and female students.
+                    </p>
+                    <a href="https://wa.me/+923089646732" target="_blank" rel="noopener" class="btn btn-warning w-100 py-2 fw-bold text-dark rounded-pill shadow-gold mb-3">
+                        <i class="fab fa-whatsapp me-2"></i>Claim Free Trial
+                    </a>
+                    <a href="/contact.html" class="btn btn-outline-primary w-100 py-2 fw-bold rounded-pill">Enroll Online</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= Footer Start ========= -->
+    <footer id="footer" class="container-fluid footerBg" role="contentinfo">
+        <div class="container pt-5 pb-4">
+            <div class="row justify-content-between">
+                <!-- Column 1: Logo & Info -->
+                <div class="col-lg-4 col-md-6 mb-4 pe-lg-4">
+                    <a href="/" aria-label="Zunaisha Islamic Institute Homepage">
+                        <img class="img-fluid mb-4" src="../images/logos/logo-footer.png" alt="Zunaisha Islamic Institute Footer Logo" loading="lazy" style="max-height: 90px;">
+                    </a>
+                    <h5 class="text-white mb-2" style="font-size: 12px; font-weight: 700; font-family: Poppins, sans-serif;">ZUNAISHA ISLAMIC INSTITUTE LTD</h5>
+                    <p class="text-white mb-4" style="font-size: 13px; line-height: 1.6; opacity: 0.9; font-family: Poppins, sans-serif;">
+                        Registration Number: 16378523<br>
+                        Welcome to Zunaisha Islamic Institute, where we make learning about Islam and the Quran accessible to everyone. Explore our educational resources and community programs. Join us in discovering the beauty and wisdom of Islamic teachings together.
+                    </p>
+                    <div class="social-flip-container">
+                        <div class="social-flip-group">
+                            <div class="social-flip-borders">
+                                <div class="social-flip-border-top"></div>
+                                <div class="social-flip-border-bottom"></div>
+                            </div>
+                            
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">Github</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">C</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-github"></i></div>
+                                </div>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">Twitter</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">O</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-twitter"></i></div>
+                                </div>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">LinkedIn</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">N</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-linkedin-in"></i></div>
+                                </div>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">Instagram</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">T</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-instagram"></i></div>
+                                </div>
+                            </a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">Facebook</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">A</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-facebook-f"></i></div>
+                                </div>
+                            </a>
+                            <a href="mailto:quranacdemy90@gmail.com" class="social-flip-node">
+                                <div class="social-tooltip">Email</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">C</div>
+                                    <div class="social-flip-back"><i class="fa-solid fa-envelope"></i></div>
+                                </div>
+                            </a>
+                            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-flip-node">
+                                <div class="social-tooltip">Discord</div>
+                                <div class="social-flip-inner">
+                                    <div class="social-flip-front">T</div>
+                                    <div class="social-flip-back"><i class="fa-brands fa-discord"></i></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Services -->
+                <div class="col-lg-2 col-md-6 mb-4 footer-links">
+                    <h4 class="text-white mb-4" style="font-size: 16px; font-weight: 700; font-family: Poppins, sans-serif;">Services</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#services">Duas</a></li>
+                        <li><a href="/#services">Qaida / Arabic Alphabets</a></li>
+                        <li><a href="/#services">Nazra Quran Online</a></li>
+                        <li><a href="/#services">Online Quran Memorization</a></li>
+                        <li><a href="/#services">Nimaz & Deen</a></li>
+                        <li><a href="/#services">Online Female Teachers</a></li>
+                        <li><a href="/#services">6 Kalimas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4 footer-links">
+                    <h4 class="text-white mb-4" style="font-size: 16px; font-weight: 700; font-family: Poppins, sans-serif;">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#services">Courses</a></li>
+                        <li><a href="/#pricing">Pricing</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/#features">Our Curriculum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Address & Contact Form -->
+                <div class="col-lg-3 col-md-6 mb-4 footer-address-col">
+                    <h4 class="text-white mb-4" style="font-size: 16px; font-weight: 700; text-transform: uppercase; font-family: Poppins, sans-serif;">Address:</h4>
+                    <ul class="list-unstyled address-list text-white mb-4" style="font-family: Poppins, sans-serif; font-size: 13px; opacity: 0.9;">
+                        <li class="mb-3 d-flex align-items-center"><i class="fa-solid fa-house" style="color: var(--secondery); margin-right: 12px; font-size: 14px;"></i> 124 City Road, London EC1V 2NX</li>
+                        <li class="mb-3 d-flex align-items-center"><i class="fa-solid fa-envelope" style="color: var(--secondery); margin-right: 12px; font-size: 14px;"></i> quranacdemy90@gmail.com</li>
+                        <li class="mb-3 d-flex align-items-center"><i class="fa-solid fa-phone" style="color: var(--secondery); margin-right: 12px; font-size: 14px;"></i> +92 315 7695348/li>
+                        <li class="mb-3 d-flex align-items-center"><i class="fa-solid fa-phone" style="color: var(--secondery); margin-right: 12px; font-size: 14px;"></i> +92 308 9646732</li>
+                    </ul>
+
+                    <div class="text-center text-white mb-3 mt-4" style="font-family: Poppins, sans-serif;">
+                        <h5 style="font-size: 14px; font-weight: 700; letter-spacing: 1px; margin-bottom: 5px;">OR</h5>
+                        <h5 style="font-size: 16px; font-weight: 700; letter-spacing: 1px;">LET US CONTACT YOU</h5>
+                    </div>
+
+                    <form id="footerContactForm" class="footer-contact-form">
+                        <input type="text" id="footerName" class="form-control mb-3" placeholder="Full Name" required style="border-radius: 4px; padding: 10px 15px; font-size: 14px; border: none;">
+                        <div class="mb-3 text-dark">
+                            <input type="tel" id="footerPhone" class="form-control" placeholder="WhatsApp Number" required style="border-radius: 4px; padding: 10px 15px; padding-left: 50px; font-size: 14px; border: none; width: 100%;">
+                        </div>
+                        <button type="submit" id="footerSubmitBtn" class="btn w-100" style="background-color: #E6B325; color: #fff; font-weight: 700; font-family: Poppins, sans-serif; border-radius: 4px; padding: 10px;">Submit</button>
+                    </form>
+                    <div id="footerFormMessage" class="mt-3 text-center" style="font-size: 14px; font-family: Poppins, sans-serif; display: none; font-weight: 600;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="background: rgba(0,0,0,0.2); padding: 15px 0;">
+            <div class="container">
+                <div class="row align-items-center bottom-bar">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="text-white mb-0" style="font-size: 12px; opacity: 0.8; font-family: Poppins, sans-serif;">Zunaisha Islamic Institute &ndash; All rights reserved &copy; 2019-2026</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <ul class="list-inline mb-0 bottom-links" style="font-family: Poppins, sans-serif; font-size: 12px;">
+                            <li class="list-inline-item"><a href="#" style="color: #fff; opacity: 0.8; text-decoration: none;">Privacy Policy</a></li>
+                            <li class="list-inline-item text-white opacity-50">|</li>
+                            <li class="list-inline-item"><a href="#" style="color: #fff; opacity: 0.8; text-decoration: none;">Refund Policy</a></li>
+                            <li class="list-inline-item text-white opacity-50">|</li>
+                            <li class="list-inline-item"><a href="#" style="color: #fff; opacity: 0.8; text-decoration: none;">Service Policy</a></li>
+                            <li class="list-inline-item text-white opacity-50">|</li>
+                            <li class="list-inline-item"><a href="#" style="color: #fff; opacity: 0.8; text-decoration: none;">Terms & Conditions</a></li>
+                            <li class="list-inline-item text-white opacity-50">|</li>
+                            <li class="list-inline-item"><a href="/sitemap.xml" style="color: #fff; opacity: 0.8; text-decoration: none;">Sitemap</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ========= Footer End ========= -->
+
+    <!-- Floating Action Button -->
+    <div class="floating-contact">
+        <a href="https://wa.me/+923089646732" target="_blank" rel="noopener" class="btn rounded-circle shadow-lg whatsapp-btn" aria-label="Contact on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script>
+        const getApiBase = () => {
+            if (window.location.protocol === 'file:') {
+                return 'http://localhost:5000';
+            }
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                if (window.location.port !== '5000' && window.location.port !== '') {
+                    return 'http://localhost:5000';
+                }
+            }
+            return '';
+        };
+
+        const escapeHtml = (text) => {
+            if (!text) return '';
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
+        // Extract current slug from the URL structure `/blog/:slug`
+        const pathSegments = window.location.pathname.split('/');
+        const blogSlug = pathSegments[pathSegments.length - 1] || pathSegments[pathSegments.length - 2];
+
+        // --- Light/Dark Mode Logic ---
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const icon = darkModeBtn.querySelector('i');
+
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            icon.className = 'fa-solid fa-sun';
+        }
+
+        darkModeBtn.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                icon.className = 'fa-solid fa-moon';
+                localStorage.setItem('dark-mode', 'disabled');
+            } else {
+                document.body.classList.add('dark-mode');
+                icon.className = 'fa-solid fa-sun';
+                localStorage.setItem('dark-mode', 'enabled');
+            }
+        });
+
+        // --- Reading Progress Indicator logic ---
+        window.addEventListener('scroll', () => {
+            const docElement = document.documentElement;
+            const bodyElement = document.body;
+            const scrollTop = docElement.scrollTop || bodyElement.scrollTop;
+            const scrollHeight = docElement.scrollHeight || bodyElement.scrollHeight;
+            const clientHeight = docElement.clientHeight;
+            const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+            
+            document.getElementById('readingProgressBar').style.width = progress + '%';
+            
+            // Sync Table of Contents highlighting based on current scrolling viewport
+            const headings = document.querySelector('.blog-content').querySelectorAll('h2, h3');
+            let activeId = '';
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                // If heading is near the top of screen
+                if (rect.top <= 150) {
+                    activeId = h.getAttribute('id');
+                }
+            });
+            
+            if (activeId) {
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + activeId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        // --- Table of Contents Builder ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentArea = document.querySelector('.blog-content');
+            const headings = contentArea.querySelectorAll('h2, h3');
+            const tocList = document.getElementById('tocList');
+            
+            if (headings.length > 0) {
+                tocList.innerHTML = '';
+                headings.forEach((heading, index) => {
+                    const id = heading.textContent.toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/(^-|-$)+/g, '') + '-' + index;
+                    
+                    heading.setAttribute('id', id);
+                    
+                    const li = document.createElement('li');
+                    li.className = 'toc-item' + (heading.tagName.toLowerCase() === 'h3' ? ' toc-item-h3' : '');
+                    
+                    const a = document.createElement('a');
+                    a.className = 'toc-link';
+                    a.href = '#' + id;
+                    a.textContent = heading.textContent;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const headerOffset = 130;
+                        const elementPosition = heading.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    });
+                    
+                    li.appendChild(a);
+                    tocList.appendChild(li);
+                });
+            }
+
+            // --- Bookmarks Logic ---
+            const bookmarkBtn = document.getElementById('bookmarkArticleBtn');
+            const bookmarkIcon = bookmarkBtn.querySelector('i');
+            const blogTitle = document.querySelector('h1').textContent;
+            
+            let bookmarks = JSON.parse(localStorage.getItem('quran_blog_bookmarks')) || [];
+            
+            const isBookmarked = bookmarks.some(b => b.slug === blogSlug);
+            if (isBookmarked) {
+                bookmarkBtn.classList.add('bookmark-btn-active');
+                bookmarkIcon.className = 'fa-solid fa-bookmark fs-6';
+            }
+
+            bookmarkBtn.addEventListener('click', () => {
+                bookmarks = JSON.parse(localStorage.getItem('quran_blog_bookmarks')) || [];
+                const idx = bookmarks.findIndex(b => b.slug === blogSlug);
+                
+                if (idx > -1) {
+                    bookmarks.splice(idx, 1);
+                    bookmarkBtn.classList.remove('bookmark-btn-active');
+                    bookmarkIcon.className = 'fa-regular fa-bookmark fs-6';
+                } else {
+                    bookmarks.push({ title: blogTitle, slug: blogSlug });
+                    bookmarkBtn.classList.add('bookmark-btn-active');
+                    bookmarkIcon.className = 'fa-solid fa-bookmark fs-6';
+                }
+                localStorage.setItem('quran_blog_bookmarks', JSON.stringify(bookmarks));
+            });
+
+            // --- Likes Logic ---
+            const likeBtn = document.getElementById('likeArticleBtn');
+            const likeIcon = likeBtn.querySelector('i');
+            const likesCountText = document.getElementById('likesCountText');
+            
+            const localLikes = JSON.parse(localStorage.getItem('quran_blog_likes')) || [];
+            if (localLikes.includes(blogSlug)) {
+                likeBtn.disabled = true;
+                likeIcon.className = 'fa-solid fa-heart text-danger';
+            }
+
+            likeBtn.addEventListener('click', async () => {
+                if (localLikes.includes(blogSlug)) return;
+                
+                try {
+                    const res = await fetch(getApiBase() + `/api/blogs/${blogSlug}/like`, { method: 'POST' });
+                    const data = await res.json();
+                    
+                    if (data.likes !== undefined) {
+                        likesCountText.textContent = data.likes;
+                        localLikes.push(blogSlug);
+                        localStorage.setItem('quran_blog_likes', JSON.stringify(localLikes));
+                        likeBtn.disabled = true;
+                        likeIcon.className = 'fa-solid fa-heart text-danger';
+                        
+                        // Heartbeat micro-animation
+                        likeIcon.style.transform = 'scale(1.4)';
+                        setTimeout(() => likeIcon.style.transform = 'scale(1)', 300);
+                    }
+                } catch(e) {
+                    console.error('Error registering like:', e);
+                }
+            });
+
+            // --- Comments Submission ---
+            const commentForm = document.getElementById('commentSubmissionForm');
+            const feedbackMsg = document.getElementById('commentFeedbackMsg');
+            const commentBtn = document.getElementById('commentSubmitBtn');
+
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('commenterName').value.trim();
+                const email = document.getElementById('commenterEmail').value.trim();
+                const comment = document.getElementById('commenterText').value.trim();
+
+                commentBtn.disabled = true;
+                commentBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin me-2"></i>Posting...';
+
+                try {
+                    const res = await fetch(getApiBase() + `/api/blogs/${blogSlug}/comments`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, comment })
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        feedbackMsg.textContent = '✅ Comment posted successfully!';
+                        feedbackMsg.className = 'ms-3 fw-bold text-success';
+                        feedbackMsg.style.display = 'inline-block';
+                        
+                        // Redraw comments block
+                        const commentsStream = document.getElementById('commentsStream');
+                        commentsStream.innerHTML = data.comments.map(c => `
+                            <div class="comment-card border-bottom py-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="fw-bold mb-0 text-dark" style="font-size: 15px;"><i class="fa-solid fa-circle-user me-2 text-primary text-opacity-50"></i>${escapeHtml(c.name)}</h6>
+                                    <span class="text-muted" style="font-size: 11px;">${new Date(c.date).toLocaleDateString()}</span>
+                                </div>
+                                <p class="text-muted mb-0 ps-4" style="font-size: 14px; white-space: pre-line;">${escapeHtml(c.comment)}</p>
+                            </div>
+                        `).join('');
+
+                        document.getElementById('commentsCountValue').textContent = data.comments.length;
+                        commentForm.reset();
+                    } else {
+                        feedbackMsg.textContent = '❌ ' + (data.message || 'Error occurred.');
+                        feedbackMsg.className = 'ms-3 fw-bold text-danger';
+                        feedbackMsg.style.display = 'inline-block';
+                    }
+                } catch(err) {
+                    feedbackMsg.textContent = '❌ Connection failed.';
+                    feedbackMsg.className = 'ms-3 fw-bold text-danger';
+                    feedbackMsg.style.display = 'inline-block';
+                } finally {
+                    commentBtn.disabled = false;
+                    commentBtn.innerHTML = 'Submit Comment';
+                    setTimeout(() => { feedbackMsg.style.display = 'none'; }, 4000);
+                }
+            });
+        });
+
+        // --- Social Shares ---
+        function shareSocial(channel) {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent(document.querySelector('h1').textContent);
+            let url = '';
+            
+            switch (channel) {
+                case 'whatsapp':
+                    url = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+                    break;
+                case 'facebook':
+                    url = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+                    break;
+                case 'twitter':
+                    url = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+                    break;
+            }
+            
+            if (url) {
+                window.open(url, '_blank', 'width=600,height=400');
+            }
+        }
+
+        function copyLink() {
+            const btn = document.getElementById('copyShareBtn');
+            const origHtml = btn.innerHTML;
+            
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check text-success"></i>';
+                setTimeout(() => { btn.innerHTML = origHtml; }, 2000);
+            }).catch(err => {
+                console.error('Could not copy link', err);
+            });
+        }
+    </script>
+</body>
+
+</html>

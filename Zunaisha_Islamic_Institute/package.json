@@ -1,0 +1,41 @@
+{
+  "name": "zunaisha-islamic-institute",
+  "version": "1.0.0",
+  "description": "Official website for Zunaisha Islamic Institute",
+  "main": "server.js",
+
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehtasham-jutt69/Zunaisha_Islamic_Institute.git"
+  },
+
+  "keywords": [
+    "nodejs",
+    "express",
+    "website",
+    "islamic",
+    "education"
+  ],
+
+  "author": "Muhammad Ehtasham",
+
+  "license": "MIT",
+
+  "bugs": {
+    "url": "https://github.com/ehtasham-jutt69/Zunaisha_Islamic_Institute/issues"
+  },
+
+  "homepage": "https://github.com/ehtasham-jutt69/Zunaisha_Islamic_Institute",
+
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.3"
+  }
+}

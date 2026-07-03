@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/submit-form.js"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/api/submit-form.js"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/api/submit-form.js"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/submit-form.js"
+    }
+  ]
+}

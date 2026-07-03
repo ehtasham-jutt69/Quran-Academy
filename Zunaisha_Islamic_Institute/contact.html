@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./images/favicon/favicon.ico">
+
+  <!-- Font Links -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- fontAwesome link -->
+  <link rel="stylesheet" href="./css/all.css">
+
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* Enhanced button styles */
+    .formBtn.submit {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .formBtn.submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .formBtn.submit:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+
+    .formBtn.submit.btn-loading {
+      background: var(--secondery);
+      color: var(--main);
+    }
+
+    .formBtn.submit.btn-success {
+      background: var(--light);
+      color: var(--secondery);
+    }
+
+    /* Alert animations */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- ========= Navbar Start ========= -->
+
+  <header class="container-fluid sticky-navbar">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html#"><img class="logoImg" src="./images/logos/logo.png" alt="logo"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html#services">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html#features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html#activities">Activities</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html#pricing">Fee</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="admin-dashboard.html?action=write">Create Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Register</a>
+              </li>
+
+            </ul>
+            <a class="button callButton" href="https://wa.me/+923089646732" target="_blank">
+              <i class="fa-solid fa-phone"></i>
+              <span class="visually-hidden">Contact Us</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========= Navbar End ========= -->
+
+
+  <!-- ========= Contact Start ========= -->
+
+  <!-- SVG Icons for Alerts -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="check-circle-fill" viewBox="0 0 16 16">
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+    <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+      <path
+        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+    <symbol id="info-fill" viewBox="0 0 16 16">
+      <path
+        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+  </svg>
+
+  <section id="contact" class="container-fluid">
+    <div class="container">
+      <h2 class="text-center --light">Registration</h2>
+      <h3 class="text-center --main">Student Registration Form</h3>
+
+      <div class="row justify-content-between">
+
+        <form class="col-lg-12 row gy-4" id="registrationForm" action="javascript:void(0)">
+
+          <div class="mb-6 col-lg-4">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" placeholder="Enter Full Name" class="form-control" id="name" name="name"
+              aria-describedby="emailHelp" required>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="age" class="form-label">Student Age</label>
+            <input type="number" placeholder="Enter Student Age" class="form-control" id="age" name="age"
+              required>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="phone" class="form-label">WhatsApp Number <i
+                class="fa-brands fa-whatsapp fa-fw font-bold "></i></label>
+            <input type="text" placeholder="+000 000-0000-0000 (WhatsApp)" class="form-control" id="phone" name="phone"
+              required>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select form-select-lg mb-3 form-control" aria-label="gender" id="gender" name="gender"
+              required>
+              <option selected></option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="subject" class="form-label">Which subject do you want to study?</label>
+            <select class="form-select form-select-lg mb-3 form-control"
+              aria-label="Which subject do you want to study?" id="subject" name="subject" required>
+              <option selected></option>
+              <option value="Noorani Qaida Course">Noorani Qaida Course</option>
+              <option value="Quran Recitation Course">Quran Recitation Course</option>
+              <option value="Quran Memorization Course">Quran Memorization Course</option>
+              <option value="Quran Tajweed Course">Quran Tajweed Course</option>
+              <option value="Quran Ijazah online Course">Quran Ijazah online Course</option>
+              <option value="Islamic Studies for Kids course">Islamic Studies for Kids course</option>
+            </select>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="day" class="form-label">How many days a week do you want to take classes?</label>
+            <input type="text" class="form-control" id="day" name="day" aria-describedby="day" required>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="hours" class="form-label">How many minutes a day do you want to study?</label>
+            <input type="text" class="form-control" id="hours" name="hours" aria-describedby="hours" required>
+          </div>
+
+
+          <div class="mb-6 col-lg-4">
+            <label for="trial" class="form-label">Do you want to take a free trial class?</label>
+            <select class="form-select form-select-lg mb-3 form-control" aria-label="trial" id="trial" name="trial">
+              <option value="Yes" selected>Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="location" class="form-label">Current Location</label>
+            <input type="text" class="form-control" id="location" name="location" aria-describedby="location"
+              placeholder="(Country Name, Optional)">
+          </div>
+
+          <div class="mb-6 col-lg-4">
+            <label for="proposedFee" class="form-label">Proposed Fee (£ / $)</label>
+            <input type="text" placeholder="Enter Proposed Fee" class="form-control" id="proposedFee" name="proposedFee" required>
+          </div>
+
+          <div class="container mt-4">
+            <div class="mb-3">
+              <small class="text-muted"><i class="fa-solid fa-info-circle me-1"></i>Please double check the WhatsApp
+                number and write with country code.</small>
+            </div>
+
+            <button type="button" class="formBtn submit col-lg-3" id="submitBtn">
+              <span class="btn-text">Confirm Registration </span>
+              <span class="btn-loading d-none">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Processing...
+              </span>
+              <span class="btn-success d-none">
+                <i class="fas fa-check-circle me-2"></i>
+                Success!
+              </span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========= Contact End ========= -->
+
+  <!-- ========= Footer Start ========= -->
+
+  <footer id="footer" class="container-fluid footerBg">
+    <div class="container">
+      <div class="row gap-4 justify-content-between">
+        <div class="col-lg-3 col-12 left row justify-content-between">
+          <a class="col-8 col-lg-12" href="index.html#"><img class="img-fluid" src="./images/logos/logo-footer.png"
+              alt="logo2"></a>
+          <div class="col-lg-2 col-3 logos icons d-flex justify-content-center img-fluid d-lg-none">
+            <ul class="d-flex gap-4">
+              <li>
+                <a href="https://www.facebook.com/share/1FysAegc95/?mibextid=wwXIfr" target="_blank"
+                  aria-label="Share on Facebook"></a>
+                <span class="visually-hidden"></span>
+                </a>
+                <i class="fa-brands fa-facebook-f"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/zunaisha_islamic_institute?igsh=bXBpbXp6M3pkdWds&utm_source=qr"
+                  target="_blank" aria-label="Instagram">
+                  <span class="visually-hidden"></span>
+                </a>
+                <i class="fa-brands fa-instagram"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/share/14qof6xKRo/" target="_blank" aria-label="Share on Facebook">
+                </a>
+                <i class="fa-brands fa-x-twitter"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12 row middle">
+          <div class="list col-4">
+            <h4>
+              Support
+            </h4>
+            <ul>
+              <li><a href="https://wa.me/+923089646732" target="_blank">Contact us</a></li>
+              <li><a href="https://www.facebook.com/zunaishaislamicinstitute/" target="_blank">Facebook</a></li>
+              <li><a href="https://wa.me/+923089646732" target="_blank">Whatsapp</a></li>
+              <li><a href="index.html#contact" target="_blank">Telegram</a></li>
+              <li><a href="https://wa.me/+923089646732" target="_blank">Online Chat</a></li>
+            </ul>
+          </div>
+          <div class="list col-4">
+            <h4>
+              Navigate
+            </h4>
+            <ul>
+              <li><a href="index.html#">Home</a></li>
+              <li><a href="index.html#about">About</a></li>
+              <li><a href="index.html#services">Services</a></li>
+              <li><a href="index.html#activities">Activities</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="list col-4">
+            <h4>
+              FAQ
+            </h4>
+            <ul>
+              <li><a href="index.html#asked">Classes</a></li>
+              <li><a href="index.html#asked">Trial</a></li>
+              <li><a href="index.html#asked">Fees</a></li>
+              <li><a href="index.html#asked">Payments</a></li>
+              <li><a href="index.html#asked">What Next</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-12 logos d-none d-lg-block">
+          <h4 class="--Xlight">
+            get in touch
+          </h4>
+          <p>
+            Have a question for us?
+            We'll answer your problem here!
+          </p>
+          <ul class="d-flex gap-4">
+            <li>
+              <a href="https://www.facebook.com/share/1FysAegc95/?mibextid=wwXIfr" target=" _blank"">
+                                <i class=" fa-brands fa-facebook-f"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/zunaisha_islamic_institute?igsh=bXBpbXp6M3pkdWds&utm_source=qr"
+                target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#contact" target="_blank">
+                <i class="fa-brands fa-x-twitter"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row positoin-relative">
+      <div class="d-flex copyright col-12">
+        <p>
+          Copyright © (Year) Borderless Chain LLC. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========= Footer End ========= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="enhanced-form.js"></script>
+
+</body>
+
+</html>

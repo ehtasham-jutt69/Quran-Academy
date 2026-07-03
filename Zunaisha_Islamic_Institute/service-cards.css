@@ -1,0 +1,213 @@
+/* Modern Service Cards */
+.service-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--Xlight);
+    overflow: hidden;
+}
+
+.service-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px);
+    border-color: var(--secondery);
+}
+
+.service-card.featured {
+    background: var(--gradient-main);
+    transform: scale(1.02);
+    border: 1px solid var(--light);
+}
+
+.service-card.featured:hover {
+    transform: scale(1.02) translateY(-8px);
+    box-shadow: var(--shadow-gold);
+}
+
+.service-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--secondery);
+    color: var(--dark);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: "Soliman Lipi", sans-serif;
+    box-shadow: var(--shadow-sm);
+}
+
+.service-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.service-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--Xlight);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    transition: var(--transition);
+}
+
+.service-card:hover .service-icon {
+    background: var(--secondery);
+    transform: scale(1.1);
+}
+
+.service-card.featured .service-icon {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+.service-card.featured:hover .service-icon {
+    background: var(--secondery);
+}
+
+.service-icon i {
+    font-size: 28px;
+    color: var(--main);
+}
+
+.service-card.featured .service-icon i {
+    color: var(--secondery);
+}
+
+.service-card.featured:hover .service-icon i {
+    color: var(--dark);
+}
+
+.service-header h4 {
+    font-family: "Soliman Lipi", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--main);
+    margin: 0;
+}
+
+.service-card.featured .service-header h4 {
+    color: var(--secondery);
+}
+
+.service-body {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    font-family: "Soliman Lipi", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark);
+    border-bottom: 1px dashed var(--Xlight);
+}
+
+.service-card.featured .service-features li {
+    color: var(--body);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.service-features li:last-child {
+    border-bottom: none;
+}
+
+.service-features li i {
+    margin-right: 12px;
+    font-size: 14px;
+    color: var(--light);
+}
+
+.service-card.featured .service-features li i {
+    color: var(--secondery);
+}
+
+.service-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.service-btn {
+    font-family: "Soliman Lipi", sans-serif;
+    border-radius: 30px;
+    border: 2px solid var(--main);
+    background: transparent;
+    color: var(--main);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 28px;
+    text-decoration: none;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.service-btn:hover {
+    background: var(--main);
+    color: var(--surface);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.service-card.featured .service-btn {
+    border-color: var(--secondery);
+    color: var(--secondery);
+}
+
+.service-card.featured .service-btn:hover {
+    background: var(--secondery);
+    color: var(--dark);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .service-card {
+        padding: 24px;
+    }
+    
+    .service-card.featured {
+        transform: none;
+    }
+    
+    .service-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .service-icon i {
+        font-size: 24px;
+    }
+    
+    .service-header h4 {
+        font-size: 22px;
+    }
+    
+    .service-features li {
+        font-size: 14px;
+    }
+    
+    .service-btn {
+        font-size: 16px;
+        padding: 8px 20px;
+    }
+}

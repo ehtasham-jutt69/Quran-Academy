@@ -1,0 +1,148 @@
+{
+    "submissions": [
+        {
+            "_id": "sub-1779312745088-89",
+            "name": "Test Student",
+            "age": "12",
+            "phone": "+923089646732",
+            "gender": "Male",
+            "subject": "Quran Recitation Course",
+            "day": "3",
+            "hours": "30",
+            "proposedFee": "50",
+            "time": "18:00",
+            "trial": "Yes",
+            "location": "Pakistan",
+            "submittedAt": "2026-05-20T21:32:25.089Z"
+        },
+        {
+            "_id": "sub-1779312838091-612",
+            "name": "Test Student",
+            "age": "12",
+            "phone": "+923089646732",
+            "gender": "Male",
+            "subject": "Quran Recitation Course",
+            "day": "3",
+            "hours": "30",
+            "proposedFee": "50",
+            "time": "18:00",
+            "trial": "Yes",
+            "location": "Pakistan",
+            "submittedAt": "2026-05-20T21:33:58.091Z"
+        },
+        {
+            "_id": "sub-1779312879993-852",
+            "name": "a",
+            "age": "1",
+            "phone": "1a",
+            "gender": "Male",
+            "subject": "Quran Memorization Course",
+            "day": "1",
+            "hours": "1",
+            "time": "",
+            "trial": "Yes",
+            "location": "z",
+            "proposedFee": "1",
+            "submittedAt": "2026-05-20T21:34:39.993Z"
+        },
+        {
+            "_id": "sub-1779313020498-371",
+            "name": "1",
+            "age": "2",
+            "phone": "1",
+            "gender": "Male",
+            "subject": "Quran Tajweed Course",
+            "day": "2",
+            "hours": "2",
+            "time": "",
+            "trial": "Yes",
+            "location": "SS",
+            "proposedFee": "22",
+            "submittedAt": "2026-05-20T21:37:00.498Z"
+        }
+    ],
+    "quickContacts": [
+        {
+            "_id": "qc-1779313174749-593",
+            "name": "ABCD",
+            "phone": "+922992929929",
+            "submittedAt": "2026-05-20T21:39:34.749Z"
+        }
+    ],
+    "blogs": [
+        {
+            "_id": "seed-blog-1",
+            "title": "10 Life-Changing Benefits of Learning Quran Online",
+            "seoTitle": "10 Life-Changing Benefits of Learning Quran Online | Zunaisha",
+            "description": "Explore the ultimate guide to learning the Quran online. Understand how professional online classes with Tajweed offer safe, convenient, and highly effective tutoring for children and adults globally.",
+            "keywords": "learn quran online, online quran classes, online quran tutoring, tajweed learning online, hifz quran classes, learn quran for kids, zunaisha islamic institute",
+            "slug": "benefits-of-learning-quran-online",
+            "category": "Online Quran Classes",
+            "tags": [
+                "Quran Classes",
+                "Online Learning",
+                "Tajweed Benefits"
+            ],
+            "imageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800",
+            "author": "Ustadha Zunaisha",
+            "date": "2026-05-15T21:31:59.207Z",
+            "views": 284,
+            "likes": 42,
+            "status": "published",
+            "readingTime": "5 min read",
+            "comments": [],
+            "content": "\n            <p class=\"lead\">In our fast-paced modern world, technology has opened up incredible opportunities for spiritual enrichment. For millions of Muslims across the globe, learning the Holy Quran has become more accessible, flexible, and interactive than ever before through online learning platforms.</p>\n            <p>At <strong>Zunaisha Islamic Institute</strong>, we bridge the gap between traditional Islamic scholarship and modern digital education, offering premium one-on-one sessions that adapt perfectly to your schedule. Below, we discuss the ten major life-changing benefits of learning the Quran online.</p>\n            <h2>1. Safety and Comfort of Learning From Home</h2>\n            <p>One of the greatest benefits is the safety and security of home-based study. Parents can easily supervise their children's lessons without having to commute to physical academies, saving time and ensuring peace of mind.</p>\n            <div class=\"quran-verse-card\">\n                <p class=\"arabic-text\">وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ</p>\n                <p class=\"translation\">\"And We send down of the Quran that which is a healing and a mercy to the believers.\" (Surah Al-Isra, 17:82)</p>\n            </div>\n            <h2>2. Hand-Picked Certified Male and Female Tutors</h2>\n            <p>Online platforms remove geographical limitations. You are no longer limited to local resources. We recruit highly qualified, certified, and fluent multilingual teachers (including graduates from elite universities like Al-Azhar) who specialize in Tajweed and Hifz pedagogy.</p>\n            <h2>3. High-Quality Personalized One-on-One Attention</h2>\n            <p>Unlike crowded traditional madrasas, online classes are typically taught one-on-one. This ensures that the teacher can focus entirely on the student's pronunciation (Makhraj), pacing, and corrections, leading to significantly faster and more accurate learning.</p>\n            <h2>4. Flexible Scheduling and Timings</h2>\n            <p>With 24/7 availability, online Quran learning lets you customize your classes around school, work, or family commitments. Whether you prefer early morning recitations or late night lessons, there is a slot for everyone.</p>\n            <h2>5. Structured Interactive Curriculum</h2>\n            <p>Modern classes utilize interactive digital whiteboards, Quranic software, slides, and educational games. This structured layout keeps young students engaged and motivated to learn the alphabets, rules of Tajweed, and memorization of Surahs.</p>\n            <div class=\"alert alert-info py-3 border-0 rounded-3 my-4\">\n                <h5 class=\"fw-bold text-primary mb-2\"><i class=\"fa-solid fa-graduation-cap me-2\"></i>Start Your Free Trial!</h5>\n                <p class=\"mb-0 text-dark\">Ready to experience these benefits yourself? Zunaisha Islamic Institute offers <strong>3 Free Trial Classes</strong> with zero obligation. <a href=\"https://wa.me/+923089646732\" target=\"_blank\" class=\"fw-bold text-decoration-underline text-primary\">Chat with us on WhatsApp to register!</a></p>\n            </div>\n        "
+        },
+        {
+            "_id": "seed-blog-2",
+            "title": "How to Improve Tajweed: A Step-by-Step Guide to Beautiful Recitation",
+            "seoTitle": "How to Improve Tajweed and Recite Quran Beautifully | Zunaisha",
+            "description": "Learn how to master Tajweed rules, correct your pronunciation (Makharij), and recite the Holy Quran with proper accent and deep spiritual impact.",
+            "keywords": "how to improve tajweed, learn tajweed rules, correct makharij, beautiful quran recitation, tajweed classes, zunaisha islamic institute",
+            "slug": "how-to-improve-tajweed",
+            "category": "Tajweed",
+            "tags": [
+                "Tajweed Rules",
+                "Quran Recitation",
+                "Makharij Guide"
+            ],
+            "imageUrl": "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&q=80&w=800",
+            "author": "Qari Muhammad Ehtasham",
+            "date": "2026-05-17T21:31:59.208Z",
+            "views": 412,
+            "likes": 58,
+            "status": "published",
+            "readingTime": "6 min read",
+            "comments": [],
+            "content": "\n            <p class=\"lead\">Reciting the Holy Quran beautifully is not just an art; it is a duty and a form of worship. The word 'Tajweed' means to beautify, refine, or master. In the context of Quranic study, it refers to the set of rules governing how the words of the Quran should be pronounced.</p>\n            <p>Allah commands us in the Quran to recite it with slow, measured tones. Achieving this beautiful tone requires systematic effort. Here is our expert guide on how to improve your Tajweed step-by-step.</p>\n            <div class=\"quran-verse-card\">\n                <p class=\"arabic-text\">وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</p>\n                <p class=\"translation\">\"...And recite the Quran with measured recitation.\" (Surah Al-Muzzammil, 73:4)</p>\n            </div>\n            <h2>Step 1: Master the Correct Makharij (Articulation Points)</h2>\n            <p>Every Arabic letter originates from a specific part of the mouth, throat, or lips. If you alter the articulation point, you change the letter's sound, which can inadvertently change the entire meaning of a Quranic word. Spend time practicing the differences between throat letters like <strong>ح (Ha)</strong> and <strong>ه (ha)</strong>, or <strong>ع (Ayn)</strong> and <strong>أ (Hamza)</strong>.</p>\n            <h2>Step 2: Understand the Noon and Meem Sakinah Rules</h2>\n            <p>These are the core building blocks of Tajweed. Memorize and apply the rules of Izhar (clarity), Idgham (nasalizing), Iqlab (changing to Meem), and Ikhfa (nasal hiding).</p>\n            <h2>Step 3: Listen Attentively to Expert Qaris</h2>\n            <p>Imitation is a powerful learning tool. Listen to legendary Qaris known for their slow and precise Tajweed, such as Sheikh Mahmoud Khalil Al-Husary or Sheikh Minshawi.</p>\n            <h2>Step 4: Record Yourself Reciting</h2>\n            <p>Often, we cannot hear our own mistakes while reciting. Record your voice reading a short passage and play it back while listening closely.</p>\n            <h2>Step 5: Get Professional One-on-One Mentorship</h2>\n            <p>At <strong>Zunaisha Islamic Institute</strong>, we specialize in personalized Tajweed corrections for students of all ages.</p>\n        "
+        },
+        {
+            "_id": "seed-blog-3",
+            "title": "What is the Best Age for Kids to Memorize the Quran (Hifz)?",
+            "seoTitle": "Best Age for Hifz Quran | When Should Children Start Memorization? | Zunaisha",
+            "description": "Learn about the optimal age for children to start Hifzul Quran, cognitive development, memorization methods, and tips for parents supporting Hifz.",
+            "keywords": "best age for hifz, when to start memorizing quran, child quran memorization, hifz tips for kids, online hifz, zunaisha islamic institute",
+            "slug": "best-age-for-hifz",
+            "category": "Hifz Tips",
+            "tags": [
+                "Hifz Tips",
+                "Parenting",
+                "Islamic Hifz"
+            ],
+            "imageUrl": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=800",
+            "author": "Hafiz Muhammad",
+            "date": "2026-05-18T21:31:59.208Z",
+            "views": 319,
+            "likes": 49,
+            "status": "published",
+            "readingTime": "4 min read",
+            "comments": [],
+            "content": "\n            <p class=\"lead\">Memorizing the entire Quran is one of the most noble achievements a young Muslim can attain, carrying profound blessings for both the child and their parents. But as a parent, a common question arises: <em>When is the best age to enroll my child in a Hifz program?</em></p>\n            <p>While every child develops uniquely, cognitive research and historical practices indicate a clear window where child memorization is exceptionally fertile. Let us look at what makes this period ideal and how to prepare your children.</p>\n            <h2>The Golden Age: 5 to 12 Years Old</h2>\n            <p>Most scholars and educators agree that the golden age for Quran memorization is between 5 and 12 years. Here is why:</p>\n            <ul>\n                <li><strong>Superb Cognitive Flexibility:</strong> Children's brains are like sponges. They possess a high capacity for acoustic retention.</li>\n                <li><strong>Fewer Distractions:</strong> During this period, children are relatively free from teenage and adult concerns.</li>\n            </ul>\n        "
+        }
+    ],
+    "admin": {
+        "username": "admin",
+        "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+        "token": null
+    }
+}
