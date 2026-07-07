@@ -562,25 +562,25 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="/">Home</a>
+                                <a class="nav-link" href="index.html">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/#about">About</a>
+                                <a class="nav-link" href="index.html#about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/#services">Services</a>
+                                <a class="nav-link" href="index.html#services">Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/#features">Features</a>
+                                <a class="nav-link" href="index.html#features">Features</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/#activities">Activities</a>
+                                <a class="nav-link" href="index.html#activities">Activities</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/#pricing">Fee</a>
+                                <a class="nav-link" href="index.html#pricing">Fee</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="blog.html">Blog</a>
+                                <a class="nav-link active" href="blog.html" aria-current="page">Blog</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="admin-dashboard.html?action=write">Create Blog</a>
@@ -679,7 +679,7 @@
                             Making traditional, Quranic, and Tajweed learning accessible, flexible, and accurate globally for kids and female students.
                         </p>
                         <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-sm btn-outline-primary px-3 rounded-pill" href="/#about">About Us</a>
+                            <a class="btn btn-sm btn-outline-primary px-3 rounded-pill" href="index.html#about">About Us</a>
                             <a class="btn btn-sm btn-primary px-3 rounded-pill" href="https://wa.me/+923089646732" target="_blank" rel="noopener">Register</a>
                         </div>
                     </div>
@@ -735,7 +735,7 @@
             <div class="row justify-content-between">
                 <!-- Column 1: Logo & Info -->
                 <div class="col-lg-4 col-md-6 mb-4 pe-lg-4">
-                    <a href="/" aria-label="Zunaisha Islamic Institute Homepage">
+                    <a href="index.html" aria-label="Zunaisha Islamic Institute Homepage">
                         <img class="img-fluid mb-4" src="./images/logos/logo-footer.png" alt="Zunaisha Islamic Institute Footer Logo" loading="lazy" style="max-height: 90px;">
                     </a>
                     <h5 class="text-white mb-2" style="font-size: 12px; font-weight: 700; font-family: Poppins, sans-serif;">ZUNAISHA ISLAMIC INSTITUTE LTD</h5>
@@ -807,13 +807,13 @@
                 <div class="col-lg-2 col-md-6 mb-4 footer-links">
                     <h4 class="text-white mb-4" style="font-size: 16px; font-weight: 700; font-family: Poppins, sans-serif;">Services</h4>
                     <ul class="list-unstyled">
-                        <li><a href="/#services">Duas</a></li>
-                        <li><a href="/#services">Qaida / Arabic Alphabets</a></li>
-                        <li><a href="/#services">Nazra Quran Online</a></li>
-                        <li><a href="/#services">Online Quran Memorization</a></li>
-                        <li><a href="/#services">Nimaz & Deen</a></li>
-                        <li><a href="/#services">Online Female Teachers</a></li>
-                        <li><a href="/#services">6 Kalimas</a></li>
+                        <li><a href="index.html#services">Duas</a></li>
+                        <li><a href="index.html#services">Qaida / Arabic Alphabets</a></li>
+                        <li><a href="index.html#services">Nazra Quran Online</a></li>
+                        <li><a href="index.html#services">Online Quran Memorization</a></li>
+                        <li><a href="index.html#services">Nimaz &amp; Deen</a></li>
+                        <li><a href="index.html#services">Online Female Teachers</a></li>
+                        <li><a href="index.html#services">6 Kalimas</a></li>
                     </ul>
                 </div>
 
@@ -821,11 +821,11 @@
                 <div class="col-lg-2 col-md-6 mb-4 footer-links">
                     <h4 class="text-white mb-4" style="font-size: 16px; font-weight: 700; font-family: Poppins, sans-serif;">Quick Links</h4>
                     <ul class="list-unstyled">
-                        <li><a href="/#services">Courses</a></li>
-                        <li><a href="/#pricing">Pricing</a></li>
+                        <li><a href="index.html#services">Courses</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
                         <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="/#features">Our Curriculum</a></li>
+                        <li><a href="contact.html">Register</a></li>
+                        <li><a href="index.html#features">Our Curriculum</a></li>
                     </ul>
                 </div>
 
@@ -1176,22 +1176,48 @@
             loadSavedBookmarks();
         }
 
-        // --- Newsletter Submission ---
-        document.getElementById('newsletterSubscriptionForm').addEventListener('submit', function(e) {
+        // --- Newsletter Submission — wired to /api/subscribe-newsletter ---
+        document.getElementById('newsletterSubscriptionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('subscriberEmail').value.trim();
             const statusMsg = document.getElementById('newsletterStatusMessage');
+            const submitBtn = this.querySelector('button[type="submit"]');
 
-            if (!email) return;
+            if (!email || !email.includes('@')) {
+                statusMsg.style.color = '#F59E0B';
+                statusMsg.textContent = 'Please enter a valid email address.';
+                statusMsg.style.display = 'block';
+                return;
+            }
 
-            statusMsg.style.color = '#10B981';
-            statusMsg.textContent = '✨ Subscription request sent successfully! Thank you for joining.';
-            statusMsg.style.display = 'block';
-            document.getElementById('subscriberEmail').value = '';
+            const origText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Subscribing…';
 
-            setTimeout(() => {
-                statusMsg.style.display = 'none';
-            }, 6000);
+            try {
+                const res = await fetch(getApiBase() + '/api/subscribe-newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                const data = await res.json();
+                if (data.success) {
+                    statusMsg.style.color = '#10B981';
+                    statusMsg.textContent = '✨ ' + data.message;
+                    document.getElementById('subscriberEmail').value = '';
+                } else {
+                    statusMsg.style.color = '#EF4444';
+                    statusMsg.textContent = data.message || 'Subscription failed. Please try again.';
+                }
+            } catch (err) {
+                statusMsg.style.color = '#EF4444';
+                statusMsg.textContent = 'Network error. Please try again later.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+                statusMsg.style.display = 'block';
+                setTimeout(() => { statusMsg.style.display = 'none'; }, 6000);
+            }
         });
 
         // --- Footer WhatsApp Contact Country Setup ---

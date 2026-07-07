@@ -4,12 +4,14 @@ const getApiBase = () => {
   if (window.location.protocol === 'file:') {
     return 'http://localhost:5000';
   }
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    if (window.location.port !== '5000' && window.location.port !== '') {
-      return 'http://localhost:5000';
-    }
+  if (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1'
+  ) {
+    // If served by the Express server on port 5000, use same-origin
+    return '';
   }
-  return '';
+  return ''; // same-origin in production
 };
 
 // Navbar functionality
