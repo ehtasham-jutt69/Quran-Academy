@@ -611,16 +611,101 @@ module.exports = function(app, mongoose, connectToDatabase) {
             const drafts = await Blog.countDocuments({ status: 'draft' });
             const scheduled = await Blog.countDocuments({ status: 'scheduled' });
 
+            let totalInquiries = 0;
+            try {
+                if (mongoose.models.FormSubmission) {
+                    totalInquiries = await mongoose.models.FormSubmission.countDocuments();
+                }
+            } catch (err) {}
+
             res.json({
                 totalArticles,
                 totalViews: viewsAgg[0] ? viewsAgg[0].totalViews : 0,
                 totalLikes: viewsAgg[0] ? viewsAgg[0].totalLikes : 0,
                 totalComments: commentsCount[0] ? commentsCount[0].count : 0,
+                totalInquiries,
                 drafts,
                 scheduled
             });
         } catch (e) {
             res.status(500).json({ success: false, message: e.message });
+        }
+    });
+
+    // --- Dynamic SEO SSR Engine for Blog Archive (/blog & /blog.html) ---
+    app.get(['/blog', '/blog.html'], async (req, res) => {
+        try {
+            let blogs;
+            if (offlineDb.isOffline()) {
+                blogs = offlineDb.getBlogs({ status: 'published' });
+            } else {
+                await checkScheduledBlogs();
+                await connectToDatabase();
+                blogs = await Blog.find({ status: 'published' }).sort({ date: -1 });
+            }
+
+            const templatePath = path.join(__dirname, 'blog.html');
+            if (!fs.existsSync(templatePath)) return res.status(404).send('Template missing');
+            let html = fs.readFileSync(templatePath, 'utf8');
+
+            const host = (req.headers.host || 'quranacdemy.com').replace(/^www\./i, '');
+            const baseUrl = `https://${host}`;
+            const canonicalUrl = `${baseUrl}/blog.html`;
+
+            // Enforce clean canonical and OpenGraph URLs
+            html = html.replace(/<link rel="canonical"[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+            html = html.replace(/<meta property="og:url"[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
+            html = html.replace(/https:\/\/quranacdemy\.com\/public\/images\/seo\/logo\.jpg/g, `${baseUrl}/images/seo/logo.jpg`);
+
+            // Server-Side Rendered Blog Cards for Googlebot and human visitors
+            let cardsHtml = '';
+            if (blogs && blogs.length > 0) {
+                cardsHtml = blogs.map(b => {
+                    const bDate = typeof b.date === 'string' ? new Date(b.date) : (b.date || new Date());
+                    const dateFormatted = bDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+                    const cleanExcerpt = (b.description || '').replace(/"/g, '&quot;');
+                    const readTime = b.readingTime || '5 min read';
+                    const category = b.category || 'General';
+                    const imgUrl = b.imageUrl || `${baseUrl}/images/seo/logo.jpg`;
+
+                    return `
+                    <div class="col-lg-4 col-md-6 mb-4 blog-post-card-item">
+                        <article class="card h-100 shadow-sm border-0 blog-item-card" style="border-radius: 16px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="position-relative overflow-hidden" style="height: 220px;">
+                                <a href="/blog/${b.slug}" aria-label="${b.title}">
+                                    <img src="${imgUrl}" class="card-img-top w-100 h-100" style="object-fit: cover;" alt="${b.title}" loading="lazy" width="400" height="220">
+                                </a>
+                                <span class="badge position-absolute top-0 end-0 m-3 px-3 py-2 rounded-pill bg-primary text-white" style="font-size: 12px; font-weight: 600;">${category}</span>
+                            </div>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <div class="d-flex align-items-center gap-3 text-muted mb-2" style="font-size: 12px;">
+                                    <span><i class="fa-regular fa-calendar me-1"></i>${dateFormatted}</span>
+                                    <span><i class="fa-regular fa-clock me-1"></i>${readTime}</span>
+                                </div>
+                                <h2 class="card-title h5 fw-bold mb-3" style="line-height: 1.4;">
+                                    <a href="/blog/${b.slug}" class="text-dark text-decoration-none hover-primary">${b.title}</a>
+                                </h2>
+                                <p class="card-text text-muted mb-4 flex-grow-1" style="font-size: 14px; line-height: 1.6;">${cleanExcerpt}</p>
+                                <div class="pt-3 border-top d-flex align-items-center justify-content-between mt-auto">
+                                    <span class="text-muted" style="font-size: 12px;"><i class="fa-solid fa-user-pen me-1"></i>${b.author || 'Ustadha Zunaisha'}</span>
+                                    <a href="/blog/${b.slug}" class="fw-bold text-primary text-decoration-none" style="font-size: 13px;">Read Article <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>`;
+                }).join('\n');
+            } else {
+                cardsHtml = '<div class="col-12 text-center py-5"><p class="text-muted">No published articles available yet. Check back soon!</p></div>';
+            }
+
+            // Inject pre-rendered cards into #blogGrid
+            html = html.replace(/<div class="row g-4" id="blogGrid">[\s\S]*?<\/div>\s*<\/div>\s*<\/section>/i, 
+                `<div class="row g-4" id="blogGrid">\n${cardsHtml}\n            </div>\n        </div>\n    </section>`);
+
+            res.send(html);
+        } catch (e) {
+            console.error('Blog SSR Error:', e);
+            res.sendFile(path.join(__dirname, 'blog.html'));
         }
     });
 
@@ -644,10 +729,14 @@ module.exports = function(app, mongoose, connectToDatabase) {
             
             let html = fs.readFileSync(templatePath, 'utf8');
 
-            const baseUrl = `${req.secure ? 'https' : 'http'}://${req.headers.host}`;
+            const host = (req.headers.host || 'quranacdemy.com').replace(/^www\./i, '');
+            const baseUrl = `https://${host}`;
             const canonicalUrl = `${baseUrl}/blog/${blog.slug}`;
-            const seoTitle = blog.seoTitle || blog.title;
-            const fullTitle = `${seoTitle} | Zunaisha Islamic Institute`;
+
+            // Clean title so brand is not repeated (e.g. "... | Zunaisha | Zunaisha Islamic Institute")
+            let baseTitle = blog.seoTitle || blog.title;
+            baseTitle = baseTitle.replace(/\s*(\||\-)\s*Zunaisha.*$/i, '').trim();
+            const fullTitle = `${baseTitle} | Zunaisha Islamic Institute`;
             
             // --- INJECT SEO META ---
             html = html.replace(/<title>.*?<\/title>/i, `<title>${fullTitle}</title>`);
@@ -659,7 +748,8 @@ module.exports = function(app, mongoose, connectToDatabase) {
                 html = html.replace('</head>', `${metaDescriptionStr}\n</head>`);
             }
 
-            const publishDate = typeof blog.date === 'string' ? new Date(blog.date) : blog.date;
+            const publishDate = typeof blog.date === 'string' ? new Date(blog.date) : (blog.date || new Date());
+            const shareImage = blog.imageUrl || `${baseUrl}/images/seo/logo.jpg`;
 
             // Injected dynamic Open Graph & Twitter Cards inside head
             const seoTags = `
@@ -669,13 +759,13 @@ module.exports = function(app, mongoose, connectToDatabase) {
                 <meta property="og:title" content="${fullTitle.replace(/"/g, '&quot;')}">
                 <meta property="og:description" content="${blog.description.replace(/"/g, '&quot;')}">
                 <meta property="og:url" content="${canonicalUrl}">
-                <meta property="og:image" content="${blog.imageUrl || `${baseUrl}/images/seo/logo.jpg`}">
-                <meta property="og:image:width" content="800">
-                <meta property="og:image:height" content="450">
+                <meta property="og:image" content="${shareImage}">
+                <meta property="og:image:width" content="1200">
+                <meta property="og:image:height" content="630">
                 <meta name="twitter:card" content="summary_large_image">
                 <meta name="twitter:title" content="${fullTitle.replace(/"/g, '&quot;')}">
                 <meta name="twitter:description" content="${blog.description.replace(/"/g, '&quot;')}">
-                <meta name="twitter:image" content="${blog.imageUrl || `${baseUrl}/images/seo/logo.jpg`}">
+                <meta name="twitter:image" content="${shareImage}">
                 
                 <!-- Structured JSON-LD Schema Markup -->
                 <script type="application/ld+json">
@@ -688,10 +778,10 @@ module.exports = function(app, mongoose, connectToDatabase) {
                   },
                   "headline": "${blog.title.replace(/"/g, '\\"')}",
                   "description": "${blog.description.replace(/"/g, '\\"')}",
-                  "image": "${blog.imageUrl || `${baseUrl}/images/seo/logo.jpg`}",
+                  "image": "${shareImage}",
                   "author": {
                     "@type": "Person",
-                    "name": "${blog.author.replace(/"/g, '\\"')}"
+                    "name": "${(blog.author || 'Ustadha Zunaisha').replace(/"/g, '\\"')}"
                   },
                   "publisher": {
                     "@type": "Organization",
@@ -745,7 +835,7 @@ module.exports = function(app, mongoose, connectToDatabase) {
             html = html.replace(/<!-- BLOG_LIKES -->/g, blog.likes || 0);
             
             if (blog.imageUrl) {
-                html = html.replace(/<!-- BLOG_FEATURED_IMAGE -->/g, `<img src="${blog.imageUrl}" class="img-fluid rounded-4 shadow-sm mb-4 featured-image" alt="${blog.title}" style="width:100%; height:400px; object-fit:cover;">`);
+                html = html.replace(/<!-- BLOG_FEATURED_IMAGE -->/g, `<img src="${blog.imageUrl}" class="img-fluid rounded-4 shadow-sm mb-4 featured-image" alt="${blog.title}" style="width:100%; height:400px; object-fit:cover;" width="800" height="400">`);
             } else {
                 html = html.replace(/<!-- BLOG_FEATURED_IMAGE -->/g, '');
             }
@@ -765,7 +855,7 @@ module.exports = function(app, mongoose, connectToDatabase) {
                 relatedHtml = relatedBlogs.map(b => `
                     <div class="col-md-4 mb-4">
                         <div class="card related-card h-100 shadow-sm border-0" style="border-radius: 16px; cursor: pointer; transition: 0.3s;" onclick="window.location.href='/blog/${b.slug}'">
-                            ${b.imageUrl ? `<img src="${b.imageUrl}" class="card-img-top" style="height: 180px; object-fit: cover; border-top-left-radius: 16px; border-top-right-radius: 16px;" alt="${b.title}" loading="lazy">` : ''}
+                            ${b.imageUrl ? `<img src="${b.imageUrl}" class="card-img-top" style="height: 180px; object-fit: cover; border-top-left-radius: 16px; border-top-right-radius: 16px;" alt="${b.title}" loading="lazy" width="300" height="180">` : ''}
                             <div class="card-body p-3">
                                 <span class="badge bg-primary bg-opacity-10 text-primary mb-2" style="font-size:11px;">${b.category}</span>
                                 <h5 class="fw-bold mb-0 text-main text-truncate-2" style="font-size:14px; line-height: 1.4; color: var(--main);">${b.title}</h5>
@@ -823,16 +913,39 @@ module.exports = function(app, mongoose, connectToDatabase) {
             }
             let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
             
-            const baseUrl = `${req.secure ? 'https' : 'http'}://${req.headers.host}`;
+            const host = (req.headers.host || 'quranacdemy.com').replace(/^www\./i, '');
+            const baseUrl = `https://${host}`;
             
-            // Base Static URLs
-            xml += `  <url><loc>${baseUrl}/</loc><priority>1.0</priority></url>\n`;
-            xml += `  <url><loc>${baseUrl}/blog.html</loc><priority>0.8</priority></url>\n`;
-            xml += `  <url><loc>${baseUrl}/contact.html</loc><priority>0.7</priority></url>\n`;
+            // Core Static URLs
+            const corePages = [
+                { loc: '/', priority: '1.0' },
+                { loc: '/courses', priority: '0.9' },
+                { loc: '/online-quran-classes-for-kids', priority: '0.9' },
+                { loc: '/noorani-qaida-online', priority: '0.9' },
+                { loc: '/online-tajweed-course', priority: '0.9' },
+                { loc: '/online-hifz-program', priority: '0.9' },
+                { loc: '/female-quran-teacher-online', priority: '0.9' },
+                { loc: '/learn-quran-for-adults', priority: '0.9' },
+                { loc: '/online-arabic-course', priority: '0.9' },
+                { loc: '/islamic-studies-for-kids', priority: '0.9' },
+                { loc: '/online-quran-classes-uk', priority: '0.85' },
+                { loc: '/online-quran-classes-usa', priority: '0.85' },
+                { loc: '/online-quran-classes-canada', priority: '0.85' },
+                { loc: '/online-quran-classes-australia', priority: '0.85' },
+                { loc: '/free-trial', priority: '0.9' },
+                { loc: '/about-us', priority: '0.8' },
+                { loc: '/our-teachers', priority: '0.8' },
+                { loc: '/blog.html', priority: '0.8' },
+                { loc: '/contact.html', priority: '0.8' }
+            ];
+
+            corePages.forEach(p => {
+                xml += `  <url><loc>${baseUrl}${p.loc}</loc><priority>${p.priority}</priority></url>\n`;
+            });
             
             // Dynamic Blog URLs
             blogs.forEach(b => {
-                const bDate = typeof b.date === 'string' ? new Date(b.date) : b.date;
+                const bDate = typeof b.date === 'string' ? new Date(b.date) : (b.date || new Date());
                 xml += `  <url><loc>${baseUrl}/blog/${b.slug}</loc><lastmod>${bDate.toISOString().split('T')[0]}</lastmod><priority>0.7</priority></url>\n`;
             });
             
@@ -847,9 +960,11 @@ module.exports = function(app, mongoose, connectToDatabase) {
 
     // --- Dynamic Robots.txt Route ---
     app.get('/robots.txt', (req, res) => {
-        const baseUrl = `${req.secure ? 'https' : 'http'}://${req.headers.host}`;
+        const host = (req.headers.host || 'quranacdemy.com').replace(/^www\./i, '');
+        const baseUrl = `https://${host}`;
         res.header('Content-Type', 'text/plain');
-        res.send(`User-agent: *\nAllow: /\nDisallow: /admin-dashboard.html\n\nSitemap: ${baseUrl}/sitemap.xml`);
+        res.send(`User-agent: *\nAllow: /\nDisallow: /admin-dashboard.html\nDisallow: /api/admin/\n\nSitemap: ${baseUrl}/sitemap.xml\n`);
     });
 
 };
+

@@ -339,8 +339,33 @@ module.exports = {
             totalArticles: state.blogs.length,
             totalViews,
             totalLikes,
-            totalComments
+            totalComments,
+            totalInquiries: (state.submissions ? state.submissions.length : 0) + (state.quickContacts ? state.quickContacts.length : 0)
         };
+    },
+
+    getSubmissions: () => {
+        return [...(state.submissions || [])].reverse();
+    },
+
+    deleteSubmission: (id) => {
+        if (!state.submissions) return false;
+        const len = state.submissions.length;
+        state.submissions = state.submissions.filter(s => s._id !== id);
+        writeDb();
+        return state.submissions.length < len;
+    },
+
+    getQuickContacts: () => {
+        return [...(state.quickContacts || [])].reverse();
+    },
+
+    deleteQuickContact: (id) => {
+        if (!state.quickContacts) return false;
+        const len = state.quickContacts.length;
+        state.quickContacts = state.quickContacts.filter(q => q._id !== id);
+        writeDb();
+        return state.quickContacts.length < len;
     },
 
     loginAdmin: (username, password) => {
